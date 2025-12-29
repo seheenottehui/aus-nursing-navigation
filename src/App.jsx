@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './styles/dashboard.css';
 import { usePersistentState } from './hooks/usePersistentState';
 import { visaPhases } from './data/timeline';
+import { nursingResources } from './data/resources';
 
 // Component Imports
 import { CalendarSection } from './components/CalendarSection';
@@ -14,6 +15,7 @@ import { Layout } from 'lucide-react';
 const defaultData = {
     timelineData: visaPhases.map(p => ({ ...p, tasks: p.tasks || [] })),
     calendarEvents: [],
+    resources: nursingResources,
     finance: {
         goal: 30000,
         saved: 5000
