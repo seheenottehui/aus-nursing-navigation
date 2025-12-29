@@ -5,12 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
     plugins: [react()],
     build: {
-        target: 'esnext',
-        minify: false
+        target: 'es2020'
     },
-    optimizeDeps: {
-        esbuildOptions: {
-            target: 'esnext' // Ensure dev mode also uses latest target
-        }
-    }
 })
