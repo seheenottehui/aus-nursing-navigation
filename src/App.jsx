@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/dashboard.css';
+import './styles/dashboard.css';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Login } from './components/Login';
 import { useFirestoreData } from './hooks/useFirestoreData';
@@ -8,7 +8,7 @@ import { useFirestoreData } from './hooks/useFirestoreData';
 import { CalendarSection } from './components/CalendarSection';
 import { VisaTimeline } from './components/VisaTimeline';
 import { FinanceSnapshot } from './components/FinanceSnapshot';
-import { ResourcesGallery } from './components/ResourcesGallery';
+import { NursingResources } from './components/NursingResources';
 import { LogOut, Layout } from 'lucide-react';
 
 function Dashboard() {
@@ -76,7 +76,7 @@ function Dashboard() {
             />
 
             {/* 4. RESOURCES (Bottom Full Width) */}
-            <ResourcesGallery
+            <NursingResources
                 resources={data.resources || []}
                 setResources={(newRes) => updateSection('resources', newRes)}
             />
