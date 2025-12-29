@@ -23,6 +23,8 @@ const defaultData = {
 
 export function useFirestoreData() {
     const { currentUser } = useAuth();
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
