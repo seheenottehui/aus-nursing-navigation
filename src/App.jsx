@@ -1,54 +1,38 @@
 import React, { useState } from 'react';
 import './styles/dashboard.css';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { Login } from './components/Login';
-import { useFirestoreData } from './hooks/useFirestoreData';
+import { usePersistentState } from './hooks/usePersistentState';
+import { visaPhases } from './data/timeline';
 
 // Component Imports
 import { CalendarSection } from './components/CalendarSection';
 import { VisaTimeline } from './components/VisaTimeline';
 import { FinanceSnapshot } from './components/FinanceSnapshot';
 import { NursingResources } from './components/NursingResources';
-import { LogOut, Layout } from 'lucide-react';
+import { Layout } from 'lucide-react';
+
+// Default data
+const defaultData = {
+    timelineData: visaPhases.map(p => ({ ...p, tasks: p.tasks || [] })),
+    calendarEvents: [],
+    finance: {
+        goal: 30000,
+        saved: 5000
+    }
+};
 
 function Dashboard() {
-    const { currentUser, logout } = useAuth();
-    const { data, loading, error, updateSection, updateFinance } = useFirestoreData();
+    const [data, setData] = usePersistentState('dashboard-data', defaultData);
 
-    if (error) {
-        return (
-            <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ textAlign: 'center', maxWidth: '500px', padding: '20px' }}>
-                    <h2 style={{ color: '#ef4444' }}>Starting Database Failed</h2>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
-                        {error.code === 'permission-denied'
-                            ? "Missing Permissions. Please check your Firestore Security Rules."
-                            : error.message}
-                    </p>
-                    <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '8px', fontSize: '0.9rem', textAlign: 'left' }}>
-                        <strong>Troubleshooting Steps:</strong>
-                        <ol style={{ margin: '8px 0', paddingLeft: '20px' }}>
-                            <li>Go to Firebase Console &rarr; Firestore Database</li>
-                            <li>Click "Create Database" if not created yet.</li>
-                            <li>Go to "Rules" tab.</li>
-                            <li>Set rules to: <code>allow read, write: if request.auth != null;</code></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    const updateSection = (sectionKey, newValue) => {
+        setData(prev => ({ ...prev, [sectionKey]: newValue }));
+    };
 
-    if (loading || !data) {
-        return (
-            <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ textAlign: 'center' }}>
-                    <div className="spinner" style={{ marginBottom: '16px' }}></div>
-                    <p className="fade-in">Loading your dashboard...</p>
-                </div>
-            </div>
-        );
-    }
+    const updateFinance = (field, value) => {
+        setData(prev => ({
+            ...prev,
+            finance: { ...prev.finance, [field]: value }
+        }));
+    };
 
     return (
         <div className="dashboard-container">
@@ -62,20 +46,6 @@ function Dashboard() {
                         <h1 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.5px' }}>AuNursing Meta</h1>
                         <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-tertiary)' }}>Strategy & Timeline Dashboard</p>
                     </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                        {currentUser.email}
-                    </span>
-                    <button
-                        onClick={logout}
-                        className="btn-icon-action"
-                        title="Sign Out"
-                        style={{ color: '#ef4444', borderColor: '#fee2e2', background: '#fef2f2' }}
-                    >
-                        <LogOut size={18} />
-                    </button>
                 </div>
             </header>
 
@@ -109,16 +79,7 @@ function Dashboard() {
 }
 
 function App() {
-    return (
-        <AuthProvider>
-            <AppContent />
-        </AuthProvider>
-    );
-}
-
-function AppContent() {
-    const { currentUser } = useAuth();
-    return currentUser ? <Dashboard /> : <Login />;
+    return <Dashboard />;
 }
 
 export default App;
