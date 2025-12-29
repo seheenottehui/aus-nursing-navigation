@@ -53,8 +53,9 @@ function Dashboard() {
 
             {/* 1. CALENDAR (Left Column) */}
             <CalendarSection
-                uniqueEvents={data.calendarEvents || []}
-                setUniqueEvents={(newEvents) => updateSection('calendarEvents', newEvents)}
+                timelineData={data.timelineData || []}
+                manualEvents={data.calendarEvents || []}
+                setManualEvents={(newEvents) => updateSection('calendarEvents', newEvents)}
             />
 
             {/* 2. TIMELINE (Right Column Top) */}
