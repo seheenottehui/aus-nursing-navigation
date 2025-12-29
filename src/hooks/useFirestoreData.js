@@ -78,11 +78,10 @@ export function useFirestoreData() {
 
         try {
             await setDoc(ref, initialPayload);
-            // Optional: Clear local storage after successful migration?
-            // localStorage.clear(); 
-            // Better to keep it for safety for now, or clear specific keys.
         } catch (e) {
             console.error("Failed to initialize user data:", e);
+            setError(e);
+            setLoading(false);
         }
     };
 
