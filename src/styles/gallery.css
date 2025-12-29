@@ -1,0 +1,287 @@
+/* Gallery Layout */
+.gallery-tabs {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1px;
+}
+
+.gallery-tab {
+    padding: var(--space-sm) var(--space-md);
+    border: none;
+    background: none;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.gallery-tab:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-hover);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.gallery-tab.active {
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-md);
+}
+
+/* Notion-style Card */
+.gallery-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.gallery-card:hover .card-delete-btn {
+    opacity: 1;
+}
+
+.card-delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s;
+    z-index: 5;
+}
+
+.card-delete-btn:hover {
+    background: var(--status-warning);
+}
+
+.add-card-btn:hover {
+    border-color: var(--accent-primary) !important;
+    background-color: var(--bg-hover) !important;
+    transform: none !important;
+}
+
+.card-cover {
+    height: 60px;
+    background: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);
+    width: 100%;
+}
+
+/* Dynamic Gradients */
+.card-cover.biology {
+    background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+}
+
+.card-cover.anatomy {
+    background: linear-gradient(135deg, #ffedd5 0%, #fff7ed 100%);
+}
+
+.card-cover.terminology {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+}
+
+.card-content {
+    padding: var(--space-md);
+    position: relative;
+}
+
+.card-icon {
+    position: absolute;
+    top: -20px;
+    left: var(--space-md);
+    width: 36px;
+    height: 36px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.card-title {
+    margin-top: var(--space-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-meta {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: var(--bg-card);
+    width: 90%;
+    max-width: 650px;
+    max-height: 85vh;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: var(--space-lg) var(--space-lg) 0;
+}
+
+.modal-cover {
+    height: 60px;
+    width: 100%;
+    background: #f1f5f9;
+    flex-shrink: 0;
+}
+
+.modal-cover.biology {
+    background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+}
+
+.modal-cover.anatomy {
+    background: linear-gradient(135deg, #ffedd5 0%, #fff7ed 100%);
+}
+
+.modal-cover.terminology {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+}
+
+
+.modal-body {
+    padding: var(--space-lg);
+    overflow-y: auto;
+}
+
+.modal-close {
+    background: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-close:hover {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Resource Link Styling */
+.resource-link-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+    group: 1;
+}
+
+.resource-link-row .btn-icon-action {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.resource-link-row:hover .btn-icon-action {
+    opacity: 1;
+}
+
+.btn-icon-action {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--bg-hover);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.resource-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    color: var(--text-secondary);
+}
+
+.resource-link:hover {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    text-decoration: none;
+}
