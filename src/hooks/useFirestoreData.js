@@ -23,8 +23,7 @@ const defaultData = {
 
 export function useFirestoreData() {
     const { currentUser } = useAuth();
-    const [data, setData] = useState(null); // null = loading
-    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (!currentUser) {
@@ -44,8 +43,7 @@ export function useFirestoreData() {
             }
         }, (err) => {
             console.error("Firestore Error:", err);
-            // Fallback: If error (e.g. permission or no net), maybe keep loading or show error?
-            // For now, let's just leave data null so UI spins or shows error.
+            setError(err);
             setLoading(false);
         });
 
@@ -114,6 +112,7 @@ export function useFirestoreData() {
     return {
         data,
         loading,
+        error,
         updateSection,
         updateFinance
     };

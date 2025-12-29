@@ -13,7 +13,31 @@ import { LogOut, Layout } from 'lucide-react';
 
 function Dashboard() {
     const { currentUser, logout } = useAuth();
-    const { data, loading, updateSection, updateFinance } = useFirestoreData();
+    const { data, loading, error, updateSection, updateFinance } = useFirestoreData();
+
+    if (error) {
+        return (
+            <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ textAlign: 'center', maxWidth: '500px', padding: '20px' }}>
+                    <h2 style={{ color: '#ef4444' }}>Starting Database Failed</h2>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                        {error.code === 'permission-denied'
+                            ? "Missing Permissions. Please check your Firestore Security Rules."
+                            : error.message}
+                    </p>
+                    <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '8px', fontSize: '0.9rem', textAlign: 'left' }}>
+                        <strong>Troubleshooting Steps:</strong>
+                        <ol style={{ margin: '8px 0', paddingLeft: '20px' }}>
+                            <li>Go to Firebase Console -> Firestore Database</li>
+                            <li>Click "Create Database" if not created yet.</li>
+                            <li>Go to "Rules" tab.</li>
+                            <li>Set rules to: <code>allow read, write: if request.auth != null;</code></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (loading || !data) {
         return (
