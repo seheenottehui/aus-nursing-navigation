@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
+import { initializeFirestore, memoryLocalCache } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAgp-13SplasVTjnZejrNi6gh6wP4s7uwk",
@@ -16,9 +16,7 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
-// Initialize Firestore with explicit settings to avoid internal assertion errors
+// Use memory-only cache to avoid persistent cache issues
 export const db = initializeFirestore(app, {
-    localCache: persistentLocalCache({
-        tabManager: persistentMultipleTabManager()
-    })
+    localCache: memoryLocalCache()
 });
