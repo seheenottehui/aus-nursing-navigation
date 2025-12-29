@@ -1,19 +1,20 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+// import { getAnalytics } from "firebase/analytics"; // Analytics is optional
 
-// TODO: Replace the following with your app's Firebase project configuration
-// You can get this from the Firebase Console -> Project Settings -> General -> Your Apps
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY_HERE",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyAgp-13SplasVTjnZejrNi6gh6wP4s7uwk",
+    authDomain: "aus-nurse.firebaseapp.com",
+    projectId: "aus-nurse",
+    storageBucket: "aus-nurse.firebasestorage.app",
+    messagingSenderId: "271758825112",
+    appId: "1:271758825112:web:1104ad34f8d467ade262ed",
+    measurementId: "G-21154RL8K6"
 };
 
 const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
