@@ -28,7 +28,7 @@ function Dashboard() {
                     <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '8px', fontSize: '0.9rem', textAlign: 'left' }}>
                         <strong>Troubleshooting Steps:</strong>
                         <ol style={{ margin: '8px 0', paddingLeft: '20px' }}>
-                            <li>Go to Firebase Console -> Firestore Database</li>
+                            <li>Go to Firebase Console &rarr; Firestore Database</li>
                             <li>Click "Create Database" if not created yet.</li>
                             <li>Go to "Rules" tab.</li>
                             <li>Set rules to: <code>allow read, write: if request.auth != null;</code></li>
